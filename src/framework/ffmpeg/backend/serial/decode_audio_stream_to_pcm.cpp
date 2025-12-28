@@ -24,6 +24,7 @@ namespace cpptools::framework::ffmpeg::backend::serial {
 		SwrContext* swrCtx,
 		AVPacket* pkt,
 		AVFrame* frame,
+		AVSampleFormat outSampleFmt,
 		int streamIndex,
 		int outSampleRate 
 	) {
@@ -33,8 +34,7 @@ namespace cpptools::framework::ffmpeg::backend::serial {
 			return false;
 		const int inRate = codecCtx->sample_rate;
 		const int channels = codecCtx->ch_layout.nb_channels;
-		const AVSampleFormat outFmt = AV_SAMPLE_FMT_S16;
-		const int bytesPerSample = av_get_bytes_per_sample(outFmt);
+		const int bytesPerSample = av_get_bytes_per_sample(outSampleFmt);
 
 		std::vector<uint8_t> temp;
 		temp.reserve(8192 * channels * bytesPerSample);
@@ -133,6 +133,7 @@ namespace cpptools::framework::ffmpeg::backend::serial {
 		AVFormatContext* fmtCtx,
 		AVCodecContext* codecCtx,
 		SwrContext* swrCtx,
+		AVSampleFormat outSampleFmt,
 		int streamIndex,
 		int outSampleRate
 	) {
@@ -155,6 +156,7 @@ namespace cpptools::framework::ffmpeg::backend::serial {
 			swrCtx,
 			pkt,
 			frame,
+			outSampleFmt,
 			streamIndex,
 			outSampleRate
 		);

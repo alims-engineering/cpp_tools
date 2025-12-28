@@ -33,7 +33,9 @@ namespace cpptools::framework::ffmpeg::backend::serial {
 		SwrContext*& swrCtx,
 		AVPacket*& pkt,
 		AVFrame*& frame,
-		int outSampleRate
+		int outSampleRate,
+		AVSampleFormat out_sample_fmt,
+		int out_channels
 	) {
 		namespace cffmpeg = cpptools::framework::ffmpeg::backend::serial;
 
@@ -70,7 +72,7 @@ namespace cpptools::framework::ffmpeg::backend::serial {
 		}
 
 		// ---------- resampler ----------
-		if (!cffmpeg::SwrContext_Init(swrCtx, codecCtx, outSampleRate)) {
+		if (!cffmpeg::SwrContext_Init(swrCtx, codecCtx, outSampleRate, out_sample_fmt, out_channels)) {
 			return false;
 		}
 

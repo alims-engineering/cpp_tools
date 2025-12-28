@@ -21,7 +21,7 @@ namespace cpptools::framework::ffmpeg::backend::serial {
         AVSampleFormat out_fmt ,
         int out_channels 
     ) {
-        AVChannelLayout out_layout;
+        AVChannelLayout out_layout{};
         av_channel_layout_default(&out_layout, out_channels);
 
         int ret = swr_alloc_set_opts2(

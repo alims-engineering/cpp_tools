@@ -25,7 +25,9 @@ namespace cpptools::framework::ffmpeg::backend::serial {
 		SwrContext*& swrCtx,
 		AVPacket*& pkt,
 		AVFrame*& frame,
-		int outSampleRate = 44100
+		int outSampleRate = 44100,
+		AVSampleFormat out_sample_fmt = AV_SAMPLE_FMT_S16,
+		int out_channels = 2
 	);
 
 
