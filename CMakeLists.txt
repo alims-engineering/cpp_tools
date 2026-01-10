@@ -10,8 +10,8 @@ message(STATUS "TOP LEVEL CMake Loaded")
 
 # preparation include<lib> start
 include(FetchContent)
-include(cmake/cpp_tools_bootstrap_cmake_tools.cmake)
-cpp_tools_bootstrap_cmake_tools()
+#include(cmake/cpp_tools_bootstrap_cmake_tools.cmake)
+#cpp_tools_bootstrap_cmake_tools()
 
 
 
@@ -58,10 +58,7 @@ cpptools_export_binary_root_props()
 
 option(CPPTOOLS_ENABLE_SDL3 "Enable SDL3 support" ON)
 
-if(CPPTOOLS_ENABLE_SDL3)
-  include(cmake/dependencies/sdl/sdl3/sdl3.cmake)
-  cpptools_enable_sdl3()
-endif()
+
 
 
 option(CPPTOOLS_ENABLE_FFMPEG "Enable FFmpeg support" ON)
@@ -70,6 +67,7 @@ if(CPPTOOLS_ENABLE_FFMPEG)
   include(cmake/dependencies/ffmpeg/ffmpeg.cmake)
   #cpptools_enable_ffmpeg()
 endif()
+
 
 
 

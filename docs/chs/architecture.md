@@ -83,7 +83,7 @@ project/                                    # 顶层仓库根目录
 
 # modules template
 ```asgl
-module/
+<domain>/
 ├── include/                    # 对外 API（public headers）
 │
 ├── backend/                    # 执行后端
@@ -103,6 +103,7 @@ module/
 │
 ├── application/                # 用例 / orchestration
 │
+├── mapper/     # 依赖高等 priority 时的 mapper
 ├── infrastructure/             # 系统实现
 │   ├── repository/
 │   ├── datasource/
@@ -114,4 +115,45 @@ module/
     ├── cli/
     └── gui/
 
+
 ```
+
+
+
+L1 model
+```asgl
+include/cpptools/
+├── core/       # （语言 / 语义基础），traits template
+├── framework/  # （纯逻辑 / 纯函数），free function / pure function
+├── modules     # （能力 / 系统 / 第三方）， obj
+```
+
+L2 model
+```asgl
+include/cpptools/
+├── core/audio/       # （语言 / 语义基础），
+│   ├── base/           # 基础语义与约束
+│   ├── types/          # 强类型 / 别名
+│   ├── memory/         # RAII / 所有权语义
+│   ├── utility/        # 小而通用的工具
+│   ├── meta/           # 编译期 / traits
+│   ├── error/          # 错误与结果表达
+│   ├── concurrency/    # 极薄并发原语（非系统）
+│   └── config/         # 编译期 / 配置常量
+├── framework/  # （纯逻辑 / 纯函数），
+│   ├── audio/        # 音频领域的纯逻辑
+│   ├── video/        # 视频领域的纯逻辑（可空）
+│   ├── math/         # 数学 / 数值
+│   ├── signal/       # 信号处理（DSP）
+│   ├── text/         # 字符串 / 编码 / 解析
+│   ├── data/         # 数据结构算法（非容器）
+│   ├── time/         # 时间计算（非系统时间）
+│   └── algorithm/    # 通用算法（无领域偏向）
+├── modules     # （能力 / 系统 / 第三方）
+│   ├── ffmpeg/
+│   ├── sdl/
+│   ├── filesystem/
+│   ├── network/
+│   └── process/
+```
+
