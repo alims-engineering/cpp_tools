@@ -2,9 +2,11 @@
 
 #include <cpptools/framework/audio.hpp>
 #include <cpptools/framework/benchmark.hpp>
+#include <cpptools/framework/console.hpp>
 #include <cpptools/framework/copy.hpp>
 #include <cpptools/framework/filler.hpp>
 #include <cpptools/framework/math.hpp>
 #include <cpptools/framework/openmp.hpp>
 #include <cpptools/framework/print.hpp>
+#include <cpptools/framework/string.hpp>
 #include <cpptools/framework/utils.hpp>

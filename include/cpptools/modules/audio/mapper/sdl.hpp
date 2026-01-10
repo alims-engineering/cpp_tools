@@ -2,3 +2,4 @@
 #pragma once
 
 #include <cpptools/modules/audio/mapper/sdl/ffmpeg.hpp>
+#include <cpptools/modules/audio/mapper/sdl/sdl.hpp>

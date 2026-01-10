@@ -51,7 +51,7 @@ priority ∈ { core, framework, modules }
 
 -----
 **维度骨架映射**
-> 可以剪枝实现特定含义，但不能随意添加骨架不存在维度
+> 可以剪枝实现特定含义，但不能
 
 | priority   | 维度骨架 |
 | ---------- | --------------- |
@@ -64,8 +64,9 @@ priority ∈ { core, framework, modules }
 回答问题：这是哪一类能力？
 ```
 category ∈ {	
-	audio,	video,	math,		signal,		time, 
-	text,	data,	filesystem,	network,	process ...
+	audio,	console,	data,		filesystem,		
+	video,	math,		signal,		string,		time, 
+	text,	network,	process ...
 }
 ```
 

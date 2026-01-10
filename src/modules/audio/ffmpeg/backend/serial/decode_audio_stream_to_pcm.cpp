@@ -40,7 +40,7 @@ namespace cpptools::modules::audio::ffmpeg::backend::serial {
 		temp.reserve(8192 * channels * bytesPerSample);
 
 		pcm.clear();
-		pcm.reserve(1048576); // 1024 * 1024, 先给 1MB，减少 realloc
+		pcm.reserve(1048576); // 1024 * 1024, set 1MB, reduce realloc
 
 		/* ================= decode loop ================= */
 

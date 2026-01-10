@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include <algorithm>
 #include <cpptools/core/traits.hpp>
 
 namespace cpptools::framework::math::backend::serial {
