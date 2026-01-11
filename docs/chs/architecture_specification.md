@@ -99,6 +99,7 @@ pattern = structure + rule + responsibility
 ```
 pattern ∈ {
   // ───────── core : 原生物（What exists）
+  primitive,
   base,
   types,
   memory,
@@ -146,6 +147,7 @@ pattern × priority 是一个受限矩阵
 **Core（原生物）**
 | pattern     | core | framework | modules | 说明                 |
 | ----------- | :--: | :-------: | :-----: | ------------------ |
+| primitive   |   ✅  |     ❌    |    ❌    | 语义原子（不可再分）|
 | base        |   ✅  |     ❌    |    ❌    | 语言级基础              |
 | types       |   ✅  |     ⚠️    |    ❌    | framework 仅使用      |
 | memory      |   ✅  |     ⚠️    |    ❌    | RAII / ownership   |
@@ -176,8 +178,8 @@ pattern × priority 是一个受限矩阵
 | device    |   ❌  |     ❌     |    ✅    | 设备实例          |
 | platform  |   ❌  |     ❌     |    ✅    | win32 / posix |
 | detail    |   ❌  |     ❌     |    ✅    | 私有实现          |
-| benchmark |   ❌  |     ⚠️    |    ✅    | 性能评估          |
-| tuning    |   ❌  |     ⚠️    |    ✅    | 性能 / 参数       |
+| benchmark |   ❌  |     ⚠️     |    ✅    | 性能评估          |
+| tuning    |   ❌  |     ⚠️     |    ✅    | 性能 / 参数       |
 
 
 

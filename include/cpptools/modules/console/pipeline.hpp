@@ -1,0 +1,4 @@
+// Auto-generated aggregate for pipeline
+#pragma once
+
+#include <cpptools/modules/console/pipeline/serial.hpp>
