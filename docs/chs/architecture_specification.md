@@ -101,6 +101,7 @@ pattern ∈ {
   // ───────── core : 原生物（What exists）
   primitive,
   base,
+  function,
   types,
   memory,
   utility,
@@ -149,6 +150,7 @@ pattern × priority 是一个受限矩阵
 | ----------- | :--: | :-------: | :-----: | ------------------ |
 | primitive   |   ✅  |     ❌    |    ❌    | 语义原子（不可再分）|
 | base        |   ✅  |     ❌    |    ❌    | 语言级基础              |
+| function    |   ✅  |     ⚠️    |    ❌    | 无状态、可组合、语义完整的行为原子    |
 | types       |   ✅  |     ⚠️    |    ❌    | framework 仅使用      |
 | memory      |   ✅  |     ⚠️    |    ❌    | RAII / ownership   |
 | utility     |   ✅  |     ⚠️    |    ⚠️    | modules 仅内部 helper |

@@ -13,4 +13,4 @@ namespace cpptools::core::string::function {
         s.erase(pos + 1);
     }
 
-} // namespace
+} // cpptools::core::string::function
