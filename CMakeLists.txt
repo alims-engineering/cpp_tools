@@ -51,133 +51,18 @@ file(GLOB_RECURSE CPPTOOLS_SOURCES
 
 message(STATUS "Found ${CPPTOOLS_SOURCES} source files")
 
+include(
+    cmake/cpp_tools_cmake_create_target_cpp_tools_core_math_std_backend_obj.cmake
+)
+cpp_tools_cmake_create_target_cpp_tools_core_math_std_backend_obj()
 
-# ============================================
-# 5. 选项：用户可以选择要构建的类型
-# ============================================
-option(CPPTOOLS_BUILD_SHARED "Build shared library (DLL/SO)" ON)
-option(CPPTOOLS_BUILD_STATIC "Build static library (LIB/A)" ON)
-option(CPPTOOLS_BUILD_HEADER_ONLY "Build header-only interface (no binary)" ON)
+get_target_property(
+    TEMP_TYPE
+    cpp_tools_core_math_std_backend_obj
+    TYPE
+)
 
-
-# ============================================
-# 6. 创建 OBJECT 库（共享编译产物，避免重复编译）
-# ============================================
-
-
-# ============================================
-# 7. 动态库 (SHARED)
-# ============================================
-if(CPPTOOLS_BUILD_SHARED AND CPPTOOLS_SOURCES)
-    add_library(cpptools_shared SHARED ${CPPTOOLS_SOURCES})
-    
-    target_include_directories(cpptools_shared
-        PUBLIC
-            $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
-            $<INSTALL_INTERFACE:include>
-        PRIVATE
-            ${CMAKE_CURRENT_LIST_DIR}/src
-    )
-    
-    if(WIN32)
-        target_compile_definitions(cpptools_shared
-            PUBLIC
-                CPPTOOLS_SHARED_EXPORTS
-            PRIVATE
-                CPPTOOLS_SHARED_BUILD
-                $<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS>
-        )
-    endif()
-    
-    set_target_properties(cpptools_shared PROPERTIES
-        OUTPUT_NAME cpptools
-        VERSION ${PROJECT_VERSION}
-        SOVERSION ${PROJECT_VERSION_MAJOR}
-        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
-        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib/shared  # 不同目录
-        ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib/shared  # 不同目录
-    )
-    
-    message(STATUS "Shared library enabled: cpptools_shared")
-endif()
-# ============================================
-# 8. 静态库 (STATIC)
-# ============================================
-if(CPPTOOLS_BUILD_STATIC AND CPPTOOLS_SOURCES)
-    add_library(cpptools_static STATIC ${CPPTOOLS_SOURCES})
-    
-    target_include_directories(cpptools_static
-        PUBLIC
-            $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
-            $<INSTALL_INTERFACE:include>
-        PRIVATE
-            ${CMAKE_CURRENT_LIST_DIR}/src
-    )
-    
-    target_compile_definitions(cpptools_static
-        PRIVATE
-            $<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS>
-    )
-    
-    set_target_properties(cpptools_static PROPERTIES
-        OUTPUT_NAME cpptools_static
-        ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib/static  # 不同目录
-    )
-    
-    message(STATUS "Static library enabled: cpptools_static")
-endif()
-
-# ============================================
-# 9. Header-Only 接口库 (源码级使用)
-# ============================================
-if(CPPTOOLS_BUILD_HEADER_ONLY)
-    add_library(cpptools_header_only INTERFACE)
-    
-    # 传递头文件路径
-    target_include_directories(cpptools_header_only
-        INTERFACE
-            ${CMAKE_CURRENT_LIST_DIR}/include
-    )
-    
-    message(STATUS "Header-only interface enabled: cpptools_header_only")
-endif()
-
-# ============================================
-# 10. 创建默认别名（根据优先级选择）
-# ============================================
-# 优先级：SHARED > STATIC > HEADER_ONLY
-if(TARGET cpptools_shared)
-    add_library(cpptools ALIAS cpptools_shared)
-    message(STATUS "Default target 'cpptools' -> shared library")
-elseif(TARGET cpptools_static)
-    add_library(cpptools ALIAS cpptools_static)
-    message(STATUS "Default target 'cpptools' -> static library")
-else()
-    add_library(cpptools ALIAS cpptools_header_only)
-    message(STATUS "Default target 'cpptools' -> header-only")
-endif()
-
-
-# binary root 必须最先导出
-include(cmake/msvs/cpptools_export_binary_root_props.cmake)
-cpptools_export_binary_root_props()
-
-
-
-# -------- SDL framework（可选） --------
-
-#option(CPPTOOLS_ENABLE_SDL3 "Enable SDL3 support" ON)
-
-
-
-
-#option(CPPTOOLS_ENABLE_FFMPEG "Enable FFmpeg support" ON)
-
-#if(CPPTOOLS_ENABLE_FFMPEG)
- # include(cmake/dependencies/ffmpeg/ffmpeg.cmake)
-  #cpptools_enable_ffmpeg()
-#endif()
-
-
-
-
+message(
+    STATUS
+    "cpp_tools_core_math_std_backend TYPE = ${TEMP_TYPE}"
+)
