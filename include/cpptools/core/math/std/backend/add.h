@@ -1,7 +1,8 @@
+#pragma once
 
 #include <iostream>
 
-int add() {
+inline int add_123() {
 	std::cout << 123;
 	return 2;
 }
