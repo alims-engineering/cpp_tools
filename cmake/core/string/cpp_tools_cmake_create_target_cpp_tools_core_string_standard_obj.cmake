@@ -1,4 +1,4 @@
-# ====== cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj.cmake
+# ====== cpp_tools_cmake_create_target_cpp_tools_core_string_standard_obj.cmake
 # ====================================
 #       explanation
 # ====================================
@@ -6,11 +6,11 @@
 #
 # Collect all object targets under:
 #
-#     cpp_tools_core_math_standard_*
+#     cpp_tools_core_string_standard_*
 #
 # and create:
 #
-#     cpp_tools_core_math_standard_obj
+#     cpp_tools_core_string_standard_obj
 #
 # If required child object targets do not exist,
 # corresponding create scripts will be included automatically.
@@ -28,11 +28,11 @@
 # ====================================
 #       return variables
 # ====================================
-# RETURN_VAR_PREFIX = CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_MATH_STANDARD_OBJ
-# ${RETURN_VAR_PREFIX}_TARGET_NAME		= cpp_tools_core_math_standard_obj
-# ${RETURN_VAR_PREFIX}_TARGET_CREATED	= TRUE / FALSE
+# RETURN_VAR_PREFIX = CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_STRING_STANDARD_OBJ
+# ${RETURN_VAR_PREFIX}_TARGET_NAME      = cpp_tools_core_string_standard_obj
+# ${RETURN_VAR_PREFIX}_TARGET_CREATED   = TRUE / FALSE
 
-function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj)
+function(cpp_tools_cmake_create_target_cpp_tools_core_string_standard_obj)
 
     # ====================================
     #       pre-variables
@@ -40,7 +40,7 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj)
 
     set(
         this_function_name
-        "CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_MATH_STANDARD_OBJ"
+        "CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_STRING_STANDARD_OBJ"
     )
 
     set(
@@ -88,7 +88,7 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj)
 
     set(
         ${RETURN_VAR_PREFIX}_TARGET_NAME
-        "cpp_tools_core_math_standard_obj"
+        "cpp_tools_core_string_standard_obj"
     )
 
     set(
@@ -101,7 +101,7 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj)
     # ====================================
 
     set(
-        CPP_TOOLS_CORE_MATH_STANDARD_MODULES
+        CPP_TOOLS_CORE_STRING_STANDARD_MODULES
 
         backend
 
@@ -126,7 +126,7 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj)
         foreach(
             temp_module
             IN LISTS
-            CPP_TOOLS_CORE_MATH_STANDARD_MODULES
+            CPP_TOOLS_CORE_STRING_STANDARD_MODULES
         )
 
             message(
@@ -145,25 +145,28 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj)
     foreach(
         temp_module
         IN LISTS
-        CPP_TOOLS_CORE_MATH_STANDARD_MODULES
+        CPP_TOOLS_CORE_STRING_STANDARD_MODULES
     )
 
         set(
             temp_target_name
-            "cpp_tools_core_math_standard_${temp_module}_obj"
+            "cpp_tools_core_string_standard_${temp_module}_obj"
         )
 
         set(
             temp_function_name
-            "cpp_tools_cmake_create_target_cpp_tools_core_math_standard_${temp_module}_obj"
+            "cpp_tools_cmake_create_target_cpp_tools_core_string_standard_${temp_module}_obj"
         )
 
         set(
             temp_cmake_file
-            "${CMAKE_CURRENT_SOURCE_DIR}/cmake/core/math/${temp_function_name}.cmake"
+            "${CMAKE_CURRENT_SOURCE_DIR}/cmake/core/string/${temp_function_name}.cmake"
         )
 
-        if(NOT TARGET ${temp_target_name})
+        if(
+            NOT TARGET
+            ${temp_target_name}
+        )
 
             include("${temp_cmake_file}")
 
@@ -196,14 +199,13 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj)
         foreach(
             temp_module
             IN LISTS
-            CPP_TOOLS_CORE_MATH_STANDARD_MODULES
+            CPP_TOOLS_CORE_STRING_STANDARD_MODULES
         )
 
             target_sources(
                 ${${RETURN_VAR_PREFIX}_TARGET_NAME}
                 PRIVATE
-                $<TARGET_OBJECTS:cpp_tools_core_math_standard_${temp_module}_obj>
-
+                "$<TARGET_OBJECTS:cpp_tools_core_string_standard_${temp_module}_obj>"
             )
 
         endforeach()
