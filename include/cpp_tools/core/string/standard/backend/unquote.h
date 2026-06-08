@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace cpptools::core::string::function {
+namespace cpp_tools::core::string::standard::backend {
 
     inline void unquote(std::string& s) {
         if (s.size() >= 2 &&
