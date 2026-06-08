@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace cpptools::core::string::function {
+namespace cpp_tools::core::string::standard::backend {
 
     inline void trim_right(std::string& s) {
         const auto pos = s.find_last_not_of(" \t\n\r");

@@ -48,7 +48,7 @@ file(GLOB_RECURSE CPPTOOLS_SOURCES
 message(STATUS "Found ${CPPTOOLS_SOURCES} source files")
 
 include(
-    cmake/cpp_tools_cmake_create_target_cpp_tools_core_math_std_backend_obj.cmake
+    cmake/cpp_tools_cmake_create_target_cpp_tools_core_math_standard_backend_obj.cmake
 )
-cpp_tools_cmake_create_target_cpp_tools_core_math_std_backend_obj()
+cpp_tools_cmake_create_target_cpp_tools_core_math_standard_backend_obj()
 

@@ -4,7 +4,7 @@
 #include <string>
 
 
-namespace cpptools::core::string::function {
+namespace cpp_tools::core::string::standard::backend {
 
     inline void trim(std::string& s) {
         const auto first = s.find_first_not_of(" \t\n\r");
