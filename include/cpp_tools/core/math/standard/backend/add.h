@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-namespace cpp_tools::core::math::std::backend {
+namespace cpp_tools::core::math::standard::backend {
 
 	inline int add_123() {
 		std::cout << 123;
