@@ -28,7 +28,7 @@ function(_gen_single DIR)
     set(TXT "// Auto-generated aggregate for ${NAME}\n#pragma once\n\n")
 
     foreach(h ${HEADERS})
-        file(RELATIVE_PATH REL "${CMAKE_SOURCE_DIR}/include" "${h}")
+        file(RELATIVE_PATH REL "${CMAKE_CURRENT_LIST_DIR}/include" "${h}")
         string(APPEND TXT "#include <${REL}>\n")
     endforeach()
 

@@ -10,10 +10,6 @@ message(STATUS "TOP LEVEL CMake Loaded")
 
 # preparation include<lib> start
 include(FetchContent)
-#include(cmake/cpp_tools_bootstrap_cmake_tools.cmake)
-#cpp_tools_bootstrap_cmake_tools()
-
-
 
 
 # --- 修正 1：使用 CMAKE_CURRENT_LIST_DIR 才是 cpptools 子模块路径 ---
@@ -56,13 +52,3 @@ include(
 )
 cpp_tools_cmake_create_target_cpp_tools_core_math_std_backend_obj()
 
-get_target_property(
-    TEMP_TYPE
-    cpp_tools_core_math_std_backend_obj
-    TYPE
-)
-
-message(
-    STATUS
-    "cpp_tools_core_math_std_backend TYPE = ${TEMP_TYPE}"
-)
