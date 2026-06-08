@@ -181,7 +181,7 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_backend_obj)
     )
 
         include(
-            "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cpp_tools_cmake_create_target_cpp_tools_core_math_standard_backend_headers.cmake"
+            "${CMAKE_CURRENT_SOURCE_DIR}/cmake/core/cpp_tools_cmake_create_target_cpp_tools_core_math_standard_backend_headers.cmake"
         )
 
         cpp_tools_cmake_create_target_cpp_tools_core_math_standard_backend_headers(

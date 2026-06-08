@@ -47,8 +47,25 @@ file(GLOB_RECURSE CPPTOOLS_SOURCES
 
 message(STATUS "Found ${CPPTOOLS_SOURCES} source files")
 
-include(
-    cmake/cpp_tools_cmake_create_target_cpp_tools_core_math_standard_backend_obj.cmake
-)
-cpp_tools_cmake_create_target_cpp_tools_core_math_standard_backend_obj()
+# ============================================
+#  include ${git_repo}/cmake files
+# ============================================
 
+file(
+    GLOB_RECURSE
+    CPP_TOOLS_CORE_CMAKE_FILES
+    CONFIGURE_DEPENDS
+
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/core/*.cmake"
+)
+
+foreach(temp_cmake_file IN LISTS CPP_TOOLS_CORE_CMAKE_FILES)
+
+    include(
+        "${temp_cmake_file}"
+    )
+
+endforeach()
+
+CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_MATH_STANDARD_BACKEND_OBJ()
+CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_STRING_STANDARD_BACKEND_OBJ()
