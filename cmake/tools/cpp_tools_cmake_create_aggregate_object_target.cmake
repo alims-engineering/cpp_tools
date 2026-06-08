@@ -1,39 +1,43 @@
-# ====== cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj.cmake
+# ====== cpp_tools_cmake_create_aggregate_object_target.cmake
 # ====================================
 #       explanation
 # ====================================
-# Triggered by ${git_repo}/CMakeLists.txt.
+# Create an aggregate OBJECT target.
 #
-# Collect all object targets under:
+# This function is used for layers that do not compile their own source files,
+# but instead collect child OBJECT targets and expose their object files to the
+# next aggregation level.
 #
-#     cpp_tools_core_math_standard_*
+# The function will:
+#   1. Ensure all child object targets exist.
+#   2. Include child creation scripts automatically when needed.
+#   3. Create the aggregate OBJECT target.
+#   4. Attach child object files and link child targets.
 #
-# and create:
-#
-#     cpp_tools_core_math_standard_obj
-#
-# If required child object targets do not exist,
-# corresponding create scripts will be included automatically.
-
 # ====================================
 #       parameters
 # ====================================
-# IS_SILENT_MODE : Disable output messages when TRUE.
-
+# TARGET_NAME          : Name of the aggregate OBJECT target to create.
+# CHILD_MODULES        : Child module names, used to build child target names.
+# CHILD_TARGET_PREFIX  : Prefix before each child module name.
+# CHILD_TARGET_SUFFIX  : Suffix after each child module name.
+# CHILD_FUNCTION_PREFIX: Function-name prefix for child creation functions.
+# CHILD_CMAKE_DIR      : Directory that contains child creation scripts.
+# IS_SILENT_MODE       : Disable output messages when TRUE.
+#
 # ====================================
 #       parameter default value
 # ====================================
 # IS_SILENT_MODE = FALSE
-
+#
 # ====================================
 #       return variables
 # ====================================
-# RETURN_VAR_PREFIX = CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_MATH_STANDARD_OBJ
-# ${RETURN_VAR_PREFIX}_TARGET_NAME		= cpp_tools_core_math_standard_obj
-# ${RETURN_VAR_PREFIX}_TARGET_CREATED	= TRUE / FALSE
+# return_var_prefix = CPP_TOOLS_CMAKE_CREATE_AGGREGATE_OBJECT_TARGET
+# ${return_var_prefix}_TARGET_NAME    = value
+# ${return_var_prefix}_TARGET_CREATED  = TRUE / FALSE
 
-
-function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj)
+function(cpp_tools_cmake_create_aggregate_object_target)
 
     # ====================================
     #       pre-variables
@@ -41,7 +45,7 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj)
 
     set(
         this_function_name
-        "CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_MATH_STANDARD_OBJ"
+        "CPP_TOOLS_CMAKE_CREATE_AGGREGATE_OBJECT_TARGET"
     )
 
     set(
@@ -57,10 +61,18 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj)
 
     set(
         oneValueArgs
+        TARGET_NAME
+        CHILD_TARGET_PREFIX
+        CHILD_TARGET_SUFFIX
+        CHILD_FUNCTION_PREFIX
+        CHILD_CMAKE_DIR
         IS_SILENT_MODE
     )
 
-    set(multiValueArgs)
+    set(
+        multiValueArgs
+        CHILD_MODULES
+    )
 
     cmake_parse_arguments(
         ARG
@@ -75,12 +87,56 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj)
     # ====================================
 
     if(NOT DEFINED ARG_IS_SILENT_MODE)
-
         set(
             ARG_IS_SILENT_MODE
             FALSE
         )
+    endif()
 
+    if(NOT DEFINED ARG_CHILD_TARGET_SUFFIX)
+        set(
+            ARG_CHILD_TARGET_SUFFIX
+            "_obj"
+        )
+    endif()
+
+    # ====================================
+    #       validate parameters
+    # ====================================
+
+    if(NOT DEFINED ARG_TARGET_NAME OR ARG_TARGET_NAME STREQUAL "")
+        message(
+            FATAL_ERROR
+            "[${this_function_name}] TARGET_NAME is required."
+        )
+    endif()
+
+    if(NOT DEFINED ARG_CHILD_TARGET_PREFIX OR ARG_CHILD_TARGET_PREFIX STREQUAL "")
+        message(
+            FATAL_ERROR
+            "[${this_function_name}] CHILD_TARGET_PREFIX is required."
+        )
+    endif()
+
+    if(NOT DEFINED ARG_CHILD_FUNCTION_PREFIX OR ARG_CHILD_FUNCTION_PREFIX STREQUAL "")
+        message(
+            FATAL_ERROR
+            "[${this_function_name}] CHILD_FUNCTION_PREFIX is required."
+        )
+    endif()
+
+    if(NOT DEFINED ARG_CHILD_CMAKE_DIR OR ARG_CHILD_CMAKE_DIR STREQUAL "")
+        message(
+            FATAL_ERROR
+            "[${this_function_name}] CHILD_CMAKE_DIR is required."
+        )
+    endif()
+
+    if(NOT ARG_CHILD_MODULES)
+        message(
+            FATAL_ERROR
+            "[${this_function_name}] CHILD_MODULES is required."
+        )
     endif()
 
     # ====================================
@@ -89,27 +145,12 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj)
 
     set(
         ${RETURN_VAR_PREFIX}_TARGET_NAME
-        "cpp_tools_core_math_standard_obj"
+        "${ARG_TARGET_NAME}"
     )
 
     set(
         ${RETURN_VAR_PREFIX}_TARGET_CREATED
         FALSE
-    )
-
-    # ====================================
-    #       child modules
-    # ====================================
-
-    set(
-        CPP_TOOLS_CORE_MATH_STANDARD_MODULES
-
-        backend
-
-        # algorithm
-        # pipeline
-        # executor
-        # policy
     )
 
     # ====================================
@@ -127,7 +168,7 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj)
         foreach(
             temp_module
             IN LISTS
-            CPP_TOOLS_CORE_MATH_STANDARD_MODULES
+            ARG_CHILD_MODULES
         )
 
             message(
@@ -146,22 +187,22 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj)
     foreach(
         temp_module
         IN LISTS
-        CPP_TOOLS_CORE_MATH_STANDARD_MODULES
+        ARG_CHILD_MODULES
     )
 
         set(
             temp_target_name
-            "cpp_tools_core_math_standard_${temp_module}_obj"
+            "${ARG_CHILD_TARGET_PREFIX}${temp_module}${ARG_CHILD_TARGET_SUFFIX}"
         )
 
         set(
             temp_function_name
-            "cpp_tools_cmake_create_target_cpp_tools_core_math_standard_${temp_module}_obj"
+            "${ARG_CHILD_FUNCTION_PREFIX}${temp_module}${ARG_CHILD_TARGET_SUFFIX}"
         )
 
         set(
             temp_cmake_file
-            "${CMAKE_CURRENT_SOURCE_DIR}/cmake/core/math/${temp_function_name}.cmake"
+            "${ARG_CHILD_CMAKE_DIR}/${temp_module}/${temp_function_name}.cmake"
         )
 
         if(NOT TARGET ${temp_target_name})
@@ -171,9 +212,8 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj)
             cmake_language(
                 CALL
                 ${temp_function_name}
-
                 IS_SILENT_MODE
-                    ${ARG_IS_SILENT_MODE}
+                ${ARG_IS_SILENT_MODE}
             )
 
         endif()
@@ -184,10 +224,7 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj)
     #       create target
     # ====================================
 
-    if(
-        NOT TARGET
-        ${${RETURN_VAR_PREFIX}_TARGET_NAME}
-    )
+    if(NOT TARGET ${${RETURN_VAR_PREFIX}_TARGET_NAME})
 
         add_library(
             ${${RETURN_VAR_PREFIX}_TARGET_NAME}
@@ -197,19 +234,19 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj)
         foreach(
             temp_module
             IN LISTS
-            CPP_TOOLS_CORE_MATH_STANDARD_MODULES
+            ARG_CHILD_MODULES
         )
 
             target_sources(
                 ${${RETURN_VAR_PREFIX}_TARGET_NAME}
                 PUBLIC
-                $<TARGET_OBJECTS:cpp_tools_core_math_standard_${temp_module}_obj>
+                "$<TARGET_OBJECTS:${ARG_CHILD_TARGET_PREFIX}${temp_module}${ARG_CHILD_TARGET_SUFFIX}>"
             )
 
             target_link_libraries(
                 ${${RETURN_VAR_PREFIX}_TARGET_NAME}
                 PUBLIC
-                cpp_tools_core_math_standard_${temp_module}_obj
+                ${ARG_CHILD_TARGET_PREFIX}${temp_module}${ARG_CHILD_TARGET_SUFFIX}
             )
 
         endforeach()

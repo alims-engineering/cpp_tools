@@ -1,19 +1,20 @@
-# ====== cpp_tools_cmake_create_target_cpp_tools_core_math_obj.cmake
+# ====== cpp_tools_cmake_create_target_cpp_tools_core_string_standard_backend_obj.cmake
 # ====================================
 #       explanation
 # ====================================
 # Triggered by ${git_repo}/CMakeLists.txt.
 #
-# Collect all object targets under:
+# Create target:
+#     cpp_tools_core_string_standard_backend_obj
 #
-#     cpp_tools_core_math_*
+# Collect source files from:
+#     ${git_repo}/src/core/string/standard/backend/
 #
-# and create:
+# User include style:
+#     #include <cpp_tools/core/string/standard/backend/backend.hpp>
 #
-#     cpp_tools_core_math_obj
-#
-# If required child object targets do not exist,
-# corresponding create scripts will be included automatically.
+# This target depends on:
+#     cpp_tools_core_string_standard_backend_headers
 
 # ====================================
 #       parameters
@@ -29,15 +30,17 @@
 #       return variables
 # ====================================
 # RETURN_VAR_PREFIX =
-#     CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_MATH_OBJ
+#     CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_STRING_STANDARD_BACKEND_OBJ
 #
 # ${RETURN_VAR_PREFIX}_TARGET_NAME
-#     = cpp_tools_core_math_obj
+#     = cpp_tools_core_string_standard_backend_obj
 #
 # ${RETURN_VAR_PREFIX}_TARGET_CREATED
 #     = TRUE / FALSE
 
-function(cpp_tools_cmake_create_target_cpp_tools_core_math_obj)
+function(
+    cpp_tools_cmake_create_target_cpp_tools_core_string_standard_backend_obj
+)
 
     # ====================================
     #       pre-variables
@@ -45,7 +48,7 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_obj)
 
     set(
         this_function_name
-        "CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_MATH_OBJ"
+        "CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_STRING_STANDARD_BACKEND_OBJ"
     )
 
     set(
@@ -93,7 +96,7 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_obj)
 
     set(
         ${RETURN_VAR_PREFIX}_TARGET_NAME
-        "cpp_tools_core_math_obj"
+        "cpp_tools_core_string_standard_backend_obj"
     )
 
     set(
@@ -102,21 +105,35 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_obj)
     )
 
     # ====================================
-    #       child modules
+    #       collect source files
     # ====================================
 
-    set(
-        CPP_TOOLS_CORE_MATH_MODULES
+    file(
+        GLOB_RECURSE
+        CPP_TOOLS_CORE_STRING_STANDARD_BACKEND_SOURCE_FILES
+        CONFIGURE_DEPENDS
 
-        standard
-
-        # simd
-        # gpu
-        # experimental
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/core/string/standard/backend/*.c"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/core/string/standard/backend/*.cc"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/core/string/standard/backend/*.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/core/string/standard/backend/*.cxx"
     )
 
     # ====================================
-    #       print modules
+    #       ensure source files
+    # ====================================
+
+    if(NOT CPP_TOOLS_CORE_STRING_STANDARD_BACKEND_SOURCE_FILES)
+
+        set(
+            CPP_TOOLS_CORE_STRING_STANDARD_BACKEND_SOURCE_FILES
+            "${CMAKE_CURRENT_SOURCE_DIR}/src/core/string/standard/backend/cpp_tools_dummy.cpp"
+        )
+
+    endif()
+
+    # ====================================
+    #       print collected files
     # ====================================
 
     if(NOT ARG_IS_SILENT_MODE)
@@ -124,64 +141,57 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_obj)
         message(STATUS "")
         message(
             STATUS
-            "[${this_function_name} - child modules]"
+            "[${this_function_name} - collect source files]"
         )
 
-        foreach(
-            temp_module
-            IN LISTS
-            CPP_TOOLS_CORE_MATH_MODULES
-        )
+        message(STATUS "")
+        message(STATUS "CPP FILES:")
+
+        if(CPP_TOOLS_CORE_STRING_STANDARD_BACKEND_SOURCE_FILES)
+
+            foreach(
+                temp_file
+                IN LISTS
+                CPP_TOOLS_CORE_STRING_STANDARD_BACKEND_SOURCE_FILES
+            )
+
+                message(
+                    STATUS
+                    "  ${temp_file}"
+                )
+
+            endforeach()
+
+        else()
 
             message(
                 STATUS
-                "  ${temp_module}"
-            )
-
-        endforeach()
-
-    endif()
-
-    # ====================================
-    #       ensure child object targets
-    # ====================================
-
-    foreach(
-        temp_module
-        IN LISTS
-        CPP_TOOLS_CORE_MATH_MODULES
-    )
-
-        set(
-            temp_target_name
-            "cpp_tools_core_math_${temp_module}_obj"
-        )
-
-        set(
-            temp_function_name
-            "cpp_tools_cmake_create_target_cpp_tools_core_math_${temp_module}_obj"
-        )
-
-        set(
-            temp_cmake_file
-            "${CMAKE_CURRENT_SOURCE_DIR}/cmake/core/math/standard/${temp_function_name}.cmake"
-        )
-
-        if(NOT TARGET ${temp_target_name})
-
-            include("${temp_cmake_file}")
-
-            cmake_language(
-                CALL
-                ${temp_function_name}
-
-                IS_SILENT_MODE
-                    ${ARG_IS_SILENT_MODE}
+                "  <EMPTY>"
             )
 
         endif()
 
-    endforeach()
+    endif()
+
+    # ====================================
+    #       ensure dependency target
+    # ====================================
+
+    if(
+        NOT TARGET
+        cpp_tools_core_string_standard_backend_headers
+    )
+
+        include(
+            "${CMAKE_CURRENT_SOURCE_DIR}/cmake/core/string/standard/backend/cpp_tools_cmake_create_target_cpp_tools_core_string_standard_backend_headers.cmake"
+        )
+
+        cpp_tools_cmake_create_target_cpp_tools_core_string_standard_backend_headers(
+            IS_SILENT_MODE
+                ${ARG_IS_SILENT_MODE}
+        )
+
+    endif()
 
     # ====================================
     #       create target
@@ -197,25 +207,19 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_obj)
             OBJECT
         )
 
-        foreach(
-            temp_module
-            IN LISTS
-            CPP_TOOLS_CORE_MATH_MODULES
+        target_sources(
+            ${${RETURN_VAR_PREFIX}_TARGET_NAME}
+
+            PRIVATE
+                ${CPP_TOOLS_CORE_STRING_STANDARD_BACKEND_SOURCE_FILES}
         )
 
-            target_sources(
-                ${${RETURN_VAR_PREFIX}_TARGET_NAME}
-                PUBLIC
-                $<TARGET_OBJECTS:cpp_tools_core_math_${temp_module}_obj>
-            )
+        target_link_libraries(
+            ${${RETURN_VAR_PREFIX}_TARGET_NAME}
 
-            target_link_libraries(
-                ${${RETURN_VAR_PREFIX}_TARGET_NAME}
-                PUBLIC
-                cpp_tools_core_math_${temp_module}_obj
-            )
-
-        endforeach()
+            PUBLIC
+                cpp_tools_core_string_standard_backend_headers
+        )
 
         set(
             ${RETURN_VAR_PREFIX}_TARGET_CREATED

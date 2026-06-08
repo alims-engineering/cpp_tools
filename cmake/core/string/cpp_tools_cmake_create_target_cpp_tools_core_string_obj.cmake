@@ -1,4 +1,4 @@
-# ====== cpp_tools_cmake_create_target_cpp_tools_core_math_obj.cmake
+# ====== cpp_tools_cmake_create_target_cpp_tools_core_string_obj.cmake
 # ====================================
 #       explanation
 # ====================================
@@ -6,11 +6,11 @@
 #
 # Collect all object targets under:
 #
-#     cpp_tools_core_math_*
+#     cpp_tools_core_string_*
 #
 # and create:
 #
-#     cpp_tools_core_math_obj
+#     cpp_tools_core_string_obj
 #
 # If required child object targets do not exist,
 # corresponding create scripts will be included automatically.
@@ -29,15 +29,15 @@
 #       return variables
 # ====================================
 # RETURN_VAR_PREFIX =
-#     CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_MATH_OBJ
+#     CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_STRING_OBJ
 #
 # ${RETURN_VAR_PREFIX}_TARGET_NAME
-#     = cpp_tools_core_math_obj
+#     = cpp_tools_core_string_obj
 #
 # ${RETURN_VAR_PREFIX}_TARGET_CREATED
 #     = TRUE / FALSE
 
-function(cpp_tools_cmake_create_target_cpp_tools_core_math_obj)
+function(cpp_tools_cmake_create_target_cpp_tools_core_string_obj)
 
     # ====================================
     #       pre-variables
@@ -45,7 +45,7 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_obj)
 
     set(
         this_function_name
-        "CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_MATH_OBJ"
+        "CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_STRING_OBJ"
     )
 
     set(
@@ -93,7 +93,7 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_obj)
 
     set(
         ${RETURN_VAR_PREFIX}_TARGET_NAME
-        "cpp_tools_core_math_obj"
+        "cpp_tools_core_string_obj"
     )
 
     set(
@@ -106,12 +106,12 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_obj)
     # ====================================
 
     set(
-        CPP_TOOLS_CORE_MATH_MODULES
+        CPP_TOOLS_CORE_STRING_MODULES
 
         standard
 
+        # unicode
         # simd
-        # gpu
         # experimental
     )
 
@@ -130,7 +130,7 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_obj)
         foreach(
             temp_module
             IN LISTS
-            CPP_TOOLS_CORE_MATH_MODULES
+            CPP_TOOLS_CORE_STRING_MODULES
         )
 
             message(
@@ -149,22 +149,22 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_obj)
     foreach(
         temp_module
         IN LISTS
-        CPP_TOOLS_CORE_MATH_MODULES
+        CPP_TOOLS_CORE_STRING_MODULES
     )
 
         set(
             temp_target_name
-            "cpp_tools_core_math_${temp_module}_obj"
+            "cpp_tools_core_string_${temp_module}_obj"
         )
 
         set(
             temp_function_name
-            "cpp_tools_cmake_create_target_cpp_tools_core_math_${temp_module}_obj"
+            "cpp_tools_cmake_create_target_cpp_tools_core_string_${temp_module}_obj"
         )
 
         set(
             temp_cmake_file
-            "${CMAKE_CURRENT_SOURCE_DIR}/cmake/core/math/standard/${temp_function_name}.cmake"
+            "${CMAKE_CURRENT_SOURCE_DIR}/cmake/core/string/standard/${temp_function_name}.cmake"
         )
 
         if(NOT TARGET ${temp_target_name})
@@ -200,19 +200,19 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_obj)
         foreach(
             temp_module
             IN LISTS
-            CPP_TOOLS_CORE_MATH_MODULES
+            CPP_TOOLS_CORE_STRING_MODULES
         )
 
             target_sources(
                 ${${RETURN_VAR_PREFIX}_TARGET_NAME}
                 PUBLIC
-                $<TARGET_OBJECTS:cpp_tools_core_math_${temp_module}_obj>
+                $<TARGET_OBJECTS:cpp_tools_core_string_${temp_module}_obj>
             )
 
             target_link_libraries(
                 ${${RETURN_VAR_PREFIX}_TARGET_NAME}
                 PUBLIC
-                cpp_tools_core_math_${temp_module}_obj
+                cpp_tools_core_string_${temp_module}_obj
             )
 
         endforeach()

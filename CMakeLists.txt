@@ -67,5 +67,4 @@ foreach(temp_cmake_file IN LISTS CPP_TOOLS_CORE_CMAKE_FILES)
 
 endforeach()
 
-CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_MATH_OBJ()
-CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_STRING_STANDARD_OBJ()
+cpp_tools_cmake_create_target_cpp_tools_core_obj()
