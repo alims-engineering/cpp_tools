@@ -206,6 +206,12 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_obj)
 
             )
 
+            target_link_libraries(
+                ${${RETURN_VAR_PREFIX}_TARGET_NAME}
+                PUBLIC
+                cpp_tools_core_math_standard_${temp_module}_obj
+            )
+
         endforeach()
 
         set(
