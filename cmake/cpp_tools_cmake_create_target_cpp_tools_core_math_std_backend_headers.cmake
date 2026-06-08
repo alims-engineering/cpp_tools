@@ -97,12 +97,13 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_std_backend_headers)
 		GLOB_RECURSE
 		CPP_TOOLS_CORE_MATH_STD_BACKEND_HEADER_FILES
 		CONFIGURE_DEPENDS
-		"${CMAKE_CURRENT_SOURCE_DIR}/include/cpptools/core/math/std/backend.hpp"
 
-		"${CMAKE_CURRENT_SOURCE_DIR}/include/cpptools/core/math/std/backend/*.h"
-		"${CMAKE_CURRENT_SOURCE_DIR}/include/cpptools/core/math/std/backend/*.hh"
-		"${CMAKE_CURRENT_SOURCE_DIR}/include/cpptools/core/math/std/backend/*.hpp"
-		"${CMAKE_CURRENT_SOURCE_DIR}/include/cpptools/core/math/std/backend/*.hxx"
+		"${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_tools/core/math/std/backend.hpp"
+
+		"${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_tools/core/math/std/backend/*.h"
+		"${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_tools/core/math/std/backend/*.hh"
+		"${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_tools/core/math/std/backend/*.hpp"
+		"${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_tools/core/math/std/backend/*.hxx"
 	)
 
 	# ====================================

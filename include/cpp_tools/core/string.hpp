@@ -1,0 +1,5 @@
+// Auto-generated aggregate for string
+#pragma once
+
+#include <cpp_tools/core/string/function.hpp>
+#include <cpp_tools/core/string/string.hpp>

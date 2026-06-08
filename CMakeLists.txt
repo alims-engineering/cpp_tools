@@ -33,7 +33,7 @@ generate_aggregate_headers_for_each_level_ignore_build(
 
 
 generate_recursive_aggregate_headers_to_upper_dir_for_each_level(
-    "${CMAKE_CURRENT_LIST_DIR}/include/cpptools"
+    "${CMAKE_CURRENT_LIST_DIR}/include/cpp_tools"
 )
 
 
