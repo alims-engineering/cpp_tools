@@ -125,7 +125,7 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_math_standard_backend_obj)
 
         set(
             CPP_TOOLS_CORE_MATH_STANDARD_BACKEND_SOURCE_FILES
-            "${CMAKE_CURRENT_SOURCE_DIR}/src/core/math/standard/backend/cpp_tools_dummy.cpp"
+            "${CMAKE_CURRENT_SOURCE_DIR}/src/cpp_tools_dummy.cpp"
         )
 
     endif()
