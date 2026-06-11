@@ -24,4 +24,21 @@ namespace cpp_tools::core::math::standard::backend {
 			}
 		}
 	}
+
+	template<class Container, class Integer>
+	void next_combination_unchecked(Container& combination, Integer max_value) {
+		backend::get(combination, 0)++;
+
+		for (Integer y = 0; y < max_value; ++y) {
+			if (backend::get(combination, y) > max_value - y) {
+
+				backend::get(combination, y + 1)++;
+
+				for (Integer y2 = y; y2 >= 0; --y2) {
+					backend::get(combination, y2)
+						= backend::get(combination, y2 + 1) + 1;
+				}
+			}
+		}
+	}
 }
