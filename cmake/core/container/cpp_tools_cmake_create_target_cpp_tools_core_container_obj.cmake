@@ -1,4 +1,4 @@
-# ====== cpp_tools_cmake_create_target_cpp_tools_core_obj.cmake
+# ====== cpp_tools_cmake_create_target_cpp_tools_core_container_obj.cmake
 # ====================================
 #       explanation
 # ====================================
@@ -6,11 +6,11 @@
 #
 # Collect all object targets under:
 #
-#     cpp_tools_core_*
+#     cpp_tools_core_container_*
 #
 # and create:
 #
-#     cpp_tools_core_obj
+#     cpp_tools_core_container_obj
 #
 # If required child object targets do not exist,
 # corresponding create scripts will be included automatically.
@@ -29,15 +29,17 @@
 #       return variables
 # ====================================
 # RETURN_VAR_PREFIX =
-#     CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_OBJ
+#     CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_CONTAINER_OBJ
 #
 # ${RETURN_VAR_PREFIX}_TARGET_NAME
-#     = cpp_tools_core_obj
+#     = cpp_tools_core_container_obj
 #
 # ${RETURN_VAR_PREFIX}_TARGET_CREATED
 #     = TRUE / FALSE
 
-function(cpp_tools_cmake_create_target_cpp_tools_core_obj)
+function(
+    cpp_tools_cmake_create_target_cpp_tools_core_container_obj
+)
 
     # ====================================
     #       pre-variables
@@ -45,7 +47,7 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_obj)
 
     set(
         this_function_name
-        "CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_OBJ"
+        "CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_CONTAINER_OBJ"
     )
 
     set(
@@ -87,10 +89,12 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_obj)
     # ====================================
 
     if(NOT DEFINED ARG_IS_SILENT_MODE)
+
         set(
             ARG_IS_SILENT_MODE
             FALSE
         )
+
     endif()
 
     # ====================================
@@ -98,11 +102,9 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_obj)
     # ====================================
 
     set(
-        CPP_TOOLS_CORE_MODULES
+        CPP_TOOLS_CORE_CONTAINER_MODULES
 
-        container
-        math
-        string
+        standard
     )
 
     # ====================================
@@ -112,19 +114,19 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_obj)
     cpp_tools_cmake_create_aggregate_object_target(
 
         TARGET_NAME
-            cpp_tools_core_obj
+            cpp_tools_core_container_obj
 
         CHILD_MODULES
-            ${CPP_TOOLS_CORE_MODULES}
+            ${CPP_TOOLS_CORE_CONTAINER_MODULES}
 
         CHILD_TARGET_PREFIX
-            "cpp_tools_core_"
+            "cpp_tools_core_container_"
 
         CHILD_FUNCTION_PREFIX
-            "cpp_tools_cmake_create_target_cpp_tools_core_"
+            "cpp_tools_cmake_create_target_cpp_tools_core_container_"
 
         CHILD_CMAKE_DIR
-            "${CMAKE_CURRENT_SOURCE_DIR}/cmake/core"
+            "${CMAKE_CURRENT_SOURCE_DIR}/cmake/core/container"
 
         IS_SILENT_MODE
             ${ARG_IS_SILENT_MODE}
@@ -136,7 +138,7 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_obj)
 
     set(
         ${RETURN_VAR_PREFIX}_TARGET_NAME
-        cpp_tools_core_obj
+        cpp_tools_core_container_obj
     )
 
     set(

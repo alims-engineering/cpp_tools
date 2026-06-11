@@ -8,10 +8,10 @@ namespace cpp_tools::core::math::standard::backend {
 	// ====================================
 	//		parameters
 	// ====================================
-	// combination_array :
+	// combination_array : Combination state array.
 	// max_value	: Maximum allowed value in the combination. Start form 1 to max_value
 	template<typename Integer = int>
-	void next_combination(Integer combination_array[], Integer max_value) {
+	void next_combination_unchecked(Integer combination_array[], Integer max_value) {
 		combination_array[0]++;
 
 		for (int y = 0; y < max_value; y++) {
