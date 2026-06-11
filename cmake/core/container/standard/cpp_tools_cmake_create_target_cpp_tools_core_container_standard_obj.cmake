@@ -104,7 +104,9 @@ function(
     set(
         CPP_TOOLS_CORE_CONTAINER_STANDARD_MODULES
 
+        backend
         traits
+
     )
 
     # ====================================
