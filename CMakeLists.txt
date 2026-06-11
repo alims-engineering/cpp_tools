@@ -68,3 +68,12 @@ foreach(temp_cmake_file IN LISTS CPP_TOOLS_CORE_CMAKE_FILES)
 endforeach()
 
 cpp_tools_cmake_create_target_cpp_tools_core_obj()
+
+
+
+add_library(cpp_tools_core_static STATIC
+    $<TARGET_OBJECTS:cpp_tools_core_container_standard_backend_obj>
+    $<TARGET_OBJECTS:cpp_tools_core_container_standard_traits_obj>
+    $<TARGET_OBJECTS:cpp_tools_core_math_standard_backend_obj>
+    $<TARGET_OBJECTS:cpp_tools_core_string_standard_backend_obj>
+)

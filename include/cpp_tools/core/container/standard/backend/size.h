@@ -2,7 +2,6 @@
 
 #include <cstddef>
 
-
 namespace cpp_tools::core::container::standard::backend {
 
     // ====================================
@@ -11,7 +10,7 @@ namespace cpp_tools::core::container::standard::backend {
     // ====================================
     //      parameters
     // ====================================
-    // container : 
+    // container : Container must provide
     // 
     template<class Container>
     constexpr auto size(const Container& container) noexcept(noexcept(container.size())) {
