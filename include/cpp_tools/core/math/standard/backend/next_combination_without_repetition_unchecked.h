@@ -7,8 +7,8 @@ namespace cpp_tools::core::math::standard::backend {
 	// ====================================
 	//		parameters
 	// ====================================
-	// combination	: Combination state array.
-	// max_value	: Maximum allowed value in the combination. Start form 1 to max_value
+	// combination	: Combination state array without repetition.
+	// max_value	: Maximum allowed value in the combination. Valid values are in the range [1, max_value].
 	//
 	// ====================================
 	//		remark
@@ -16,7 +16,7 @@ namespace cpp_tools::core::math::standard::backend {
 	// It is generally used when size_of_combination (larger than, >) max_value.
 	// Because it will stop checking when the combination have all done
 	template<class Container, class Integer>
-	void next_combination_unchecked(
+	void next_combination_without_repetition_unchecked(
 		Container& combination,
 		Integer max_value
 	) {
@@ -40,7 +40,7 @@ namespace cpp_tools::core::math::standard::backend {
 	// ====================================
 	//      parameters
 	// ====================================
-	// combination      : Current combination state.
+	// combination      : Combination state array without repetition.
 	// max_value        : Maximum allowed value in the combination.
 	//                    Valid values are in the range [1, max_value].
 	// combination_size : Number of active elements participating in the
@@ -50,7 +50,7 @@ namespace cpp_tools::core::math::standard::backend {
 	// ====================================
 	// It is generally used when size_of_combination (smaller than or equal to, <=) max_value.
 	template<class Container, class Integer>
-	void next_combination_unchecked(
+	void next_combination_without_repetition_unchecked(
 		Container& combination,
 		Integer max_value,
 		Integer combination_size
