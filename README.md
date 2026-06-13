@@ -26,7 +26,7 @@ FetchContent_MakeAvailable(cpp_tools)
 Clone the repository:
 
 ```bash
-git clone https://github.com/alims-engineering/cmake_tools.git "/AAA_Alims_Core/cpp_tools"
+git clone https://github.com/alims-engineering/cpp_tools.git "/AAA_Alims_Core/cpp_tools"
 ```
 
 Then add the following line to your CMakeLists.txt:
@@ -39,7 +39,7 @@ add_subdirectory("/AAA_Alims_Core/cpp_tools")
 Clone the repository:
 
 ```bash
-git clone https://github.com/alims-engineering/cmake_tools.git "C:/AAA_Alims_Core/cpp_tools"
+git clone https://github.com/alims-engineering/cpp_tools.git "C:/AAA_Alims_Core/cpp_tools"
 ```
 
 Then add the following line to your CMakeLists.txt:
