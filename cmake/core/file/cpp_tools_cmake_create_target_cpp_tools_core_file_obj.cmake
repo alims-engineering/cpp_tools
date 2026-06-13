@@ -1,4 +1,4 @@
-# ====== cpp_tools_cmake_create_target_cpp_tools_core_obj.cmake
+# ====== cpp_tools_cmake_create_target_cpp_tools_core_file_obj.cmake
 # ====================================
 #       explanation
 # ====================================
@@ -6,11 +6,11 @@
 #
 # Collect all object targets under:
 #
-#     cpp_tools_core_*
+#     cpp_tools_core_file_*
 #
 # and create:
 #
-#     cpp_tools_core_obj
+#     cpp_tools_core_file_obj
 #
 # If required child object targets do not exist,
 # corresponding create scripts will be included automatically.
@@ -29,15 +29,15 @@
 #       return variables
 # ====================================
 # RETURN_VAR_PREFIX =
-#     CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_OBJ
+#     CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_FILE_OBJ
 #
 # ${RETURN_VAR_PREFIX}_TARGET_NAME
-#     = cpp_tools_core_obj
+#     = cpp_tools_core_file_obj
 #
 # ${RETURN_VAR_PREFIX}_TARGET_CREATED
 #     = TRUE / FALSE
 
-function(cpp_tools_cmake_create_target_cpp_tools_core_obj)
+function(cpp_tools_cmake_create_target_cpp_tools_core_file_obj)
 
     # ====================================
     #       pre-variables
@@ -45,20 +45,12 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_obj)
 
     set(
         this_function_name
-        "CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_OBJ"
+        "CPP_TOOLS_CMAKE_CREATE_TARGET_CPP_TOOLS_CORE_FILE_OBJ"
     )
 
     set(
         RETURN_VAR_PREFIX
         "${this_function_name}"
-    )
-
-    # ====================================
-    #       includes
-    # ====================================
-
-    include(
-        "${CMAKE_CURRENT_SOURCE_DIR}/cmake/tools/cpp_tools_cmake_create_aggregate_object_target.cmake"
     )
 
     # ====================================
@@ -87,63 +79,150 @@ function(cpp_tools_cmake_create_target_cpp_tools_core_obj)
     # ====================================
 
     if(NOT DEFINED ARG_IS_SILENT_MODE)
+
         set(
             ARG_IS_SILENT_MODE
             FALSE
         )
+
     endif()
+
+    # ====================================
+    #       local variables
+    # ====================================
+
+    set(
+        ${RETURN_VAR_PREFIX}_TARGET_NAME
+        "cpp_tools_core_file_obj"
+    )
+
+    set(
+        ${RETURN_VAR_PREFIX}_TARGET_CREATED
+        FALSE
+    )
 
     # ====================================
     #       child modules
     # ====================================
 
     set(
-        CPP_TOOLS_CORE_MODULES
+        CPP_TOOLS_CORE_FILE_MODULES
 
-        container
-        file
-        math
-        string
+        standard
+
+        # simd
+        # gpu
+        # experimental
     )
 
     # ====================================
-    #       create aggregate target
+    #       print modules
     # ====================================
 
-    cpp_tools_cmake_create_aggregate_object_target(
+    if(NOT ARG_IS_SILENT_MODE)
 
-        TARGET_NAME
-            cpp_tools_core_obj
+        message(STATUS "")
+        message(
+            STATUS
+            "[${this_function_name} - child modules]"
+        )
 
-        CHILD_MODULES
-            ${CPP_TOOLS_CORE_MODULES}
+        foreach(
+            temp_module
+            IN LISTS
+            CPP_TOOLS_CORE_FILE_MODULES
+        )
 
-        CHILD_TARGET_PREFIX
-            "cpp_tools_core_"
+            message(
+                STATUS
+                "  ${temp_module}"
+            )
 
-        CHILD_FUNCTION_PREFIX
-            "cpp_tools_cmake_create_target_cpp_tools_core_"
+        endforeach()
 
-        CHILD_CMAKE_DIR
-            "${CMAKE_CURRENT_SOURCE_DIR}/cmake/core"
-
-        IS_SILENT_MODE
-            ${ARG_IS_SILENT_MODE}
-    )
+    endif()
 
     # ====================================
-    #       pack return variables
+    #       ensure child object targets
     # ====================================
 
-    set(
-        ${RETURN_VAR_PREFIX}_TARGET_NAME
-        cpp_tools_core_obj
+    foreach(
+        temp_module
+        IN LISTS
+        CPP_TOOLS_CORE_FILE_MODULES
     )
 
-    set(
-        ${RETURN_VAR_PREFIX}_TARGET_CREATED
-        ${CPP_TOOLS_CMAKE_CREATE_AGGREGATE_OBJECT_TARGET_TARGET_CREATED}
+        set(
+            temp_target_name
+            "cpp_tools_core_file_${temp_module}_obj"
+        )
+
+        set(
+            temp_function_name
+            "cpp_tools_cmake_create_target_cpp_tools_core_file_${temp_module}_obj"
+        )
+
+        set(
+            temp_cmake_file
+            "${CMAKE_CURRENT_SOURCE_DIR}/cmake/core/file/${temp_module}/${temp_function_name}.cmake"
+        )
+
+        if(NOT TARGET ${temp_target_name})
+
+            include("${temp_cmake_file}")
+
+            cmake_language(
+                CALL
+                ${temp_function_name}
+
+                IS_SILENT_MODE
+                    ${ARG_IS_SILENT_MODE}
+            )
+
+        endif()
+
+    endforeach()
+
+    # ====================================
+    #       create target
+    # ====================================
+
+    if(
+        NOT TARGET
+        ${${RETURN_VAR_PREFIX}_TARGET_NAME}
     )
+
+        add_library(
+            ${${RETURN_VAR_PREFIX}_TARGET_NAME}
+            OBJECT
+        )
+
+        foreach(
+            temp_module
+            IN LISTS
+            CPP_TOOLS_CORE_FILE_MODULES
+        )
+
+            target_sources(
+                ${${RETURN_VAR_PREFIX}_TARGET_NAME}
+                PUBLIC
+                $<TARGET_OBJECTS:cpp_tools_core_file_${temp_module}_obj>
+            )
+
+            target_link_libraries(
+                ${${RETURN_VAR_PREFIX}_TARGET_NAME}
+                PUBLIC
+                cpp_tools_core_file_${temp_module}_obj
+            )
+
+        endforeach()
+
+        set(
+            ${RETURN_VAR_PREFIX}_TARGET_CREATED
+            TRUE
+        )
+
+    endif()
 
     # ====================================
     #       print return variables
