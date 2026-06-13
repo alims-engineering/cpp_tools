@@ -5,6 +5,8 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <type_traits>
+
 
 namespace cpp_tools::core::file::standard::backend {
 
@@ -42,7 +44,7 @@ namespace cpp_tools::core::file::standard::backend {
                 line.erase(0, 3);
             }
 
-            if constexpr (std::same_as<T, std::string>)
+            if constexpr (std::is_same_v<T, std::string>)
             {
                 result.push_back(std::move(line));
             }
@@ -64,7 +66,7 @@ namespace cpp_tools::core::file::standard::backend {
 
         while (std::getline(file, line))
         {
-            if constexpr (std::same_as<T, std::string>)
+            if constexpr (std::is_same_v<T, std::string>)
             {
                 result.push_back(std::move(line));
             }
