@@ -13,9 +13,18 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 message(STATUS "TOP LEVEL CMake Loaded")
 
-# preparation include<lib> start
+# ====================================
+#   include<lib> 
+# ====================================
 include(FetchContent)
 
+FetchContent_Declare(
+    cmake_tools
+    GIT_REPOSITORY https://github.com/alims-engineering/cmake_tools.git
+    GIT_TAG main
+)
+
+FetchContent_MakeAvailable(cmake_tools)
 
 # --- 修正 1：使用 CMAKE_CURRENT_LIST_DIR 才是 cpptools 子模块路径 ---
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/Modules")
@@ -72,6 +81,19 @@ foreach(temp_cmake_file IN LISTS CPP_TOOLS_CORE_CMAKE_FILES)
 
 endforeach()
 
-cpp_tools_cmake_create_target_cpp_tools_core_obj()
+#cpp_tools_cmake_create_target_cpp_tools_core_obj()
 
 
+create_targets_recursively_cumulative(
+    TARGET_NAME cpp_tools
+    SEARCH_PATHS "${CMAKE_SOURCE_DIR}/src"
+    FILE_PATTERNS "*.c" "*.cpp"
+)
+
+file(
+    GLOB_RECURSE
+    CPP_TOOLS_HEADER_FILES
+    CONFIGURE_DEPENDS
+    "${CMAKE_SOURCE_DIR}/include/*.h"
+    "${CMAKE_SOURCE_DIR}/include/*.hpp"
+)
