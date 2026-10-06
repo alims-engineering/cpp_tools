@@ -97,3 +97,7 @@ file(
     "${CMAKE_SOURCE_DIR}/include/*.h"
     "${CMAKE_SOURCE_DIR}/include/*.hpp"
 )
+
+target_include_directories(cpp_tools PUBLIC
+    "${CMAKE_CURRENT_SOURCE_DIR}/include"
+)
