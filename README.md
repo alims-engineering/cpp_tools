@@ -26,26 +26,26 @@ FetchContent_MakeAvailable(cpp_tools)
 Clone the repository:
 
 ```bash
-git clone https://github.com/alims-engineering/cpp_tools.git "/AAA_Alims_Core/cpp_tools"
+git clone https://github.com/alims-engineering/cpp_tools.git "/Alims/engineering/cpp_tools"
 ```
 
 Then add the following line to your CMakeLists.txt:
 
 ```cmake
-add_subdirectory("/AAA_Alims_Core/cpp_tools")
+add_subdirectory("/Alims/engineering/cpp_tools")
 ```
 
 #### Windows
 Clone the repository:
 
 ```bash
-git clone https://github.com/alims-engineering/cpp_tools.git "C:/AAA_Alims_Core/cpp_tools"
+git clone https://github.com/alims-engineering/cpp_tools.git "C:/Alims/engineering/cpp_tools"
 ```
 
 Then add the following line to your CMakeLists.txt:
 
 ```cmake
-add_subdirectory("C:/AAA_Alims_Core/cpp_tools")
+add_subdirectory("C:/Alims/engineering/cpp_tools")
 ```
 
 
