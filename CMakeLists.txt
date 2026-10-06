@@ -86,7 +86,7 @@ endforeach()
 
 create_targets_recursively_cumulative(
     TARGET_NAME cpp_tools
-    SEARCH_PATHS "${CMAKE_SOURCE_DIR}/src"
+    SEARCH_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/src"
     FILE_PATTERNS "*.c" "*.cpp"
 )
 
@@ -94,8 +94,8 @@ file(
     GLOB_RECURSE
     CPP_TOOLS_HEADER_FILES
     CONFIGURE_DEPENDS
-    "${CMAKE_SOURCE_DIR}/include/*.h"
-    "${CMAKE_SOURCE_DIR}/include/*.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp"
 )
 
 target_include_directories(cpp_tools PUBLIC
